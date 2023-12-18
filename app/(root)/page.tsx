@@ -1,10 +1,13 @@
-import { Button } from "@/components/ui/button";
+"use client"
+import { Modal } from "@/components/modal";
 
  const SetupPage=()=> {
     return (
       
-      <div> This is a protected route
-        <Button size="default" variant="destructive" className="p-4">click</Button>
+      <div className="p-4"> 
+        <Modal isOpen={true} onClose={()=>{}} title="Test" description="Test Description">
+          Children
+        </Modal>
       </div>
     )
   }
