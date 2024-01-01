@@ -10,7 +10,7 @@ export async function PATCH(req:Request,{params}:{params:{storeId:string,billboa
         const body=await req.json()
         const {label,imageUrl}=body
         if(!userId){
-            return new NextResponse("Unauthenticated", {status:401})
+            return new NextResponse("Unauthenticated", {status:403})
         }
         if(!label){
             return new NextResponse("Label is Required",{status:400})
@@ -35,7 +35,7 @@ export async function PATCH(req:Request,{params}:{params:{storeId:string,billboa
             if(!storeByUserId){
                 return new NextResponse("Unauthorized", {status:403})
             }
-        const billboard=await prismadb.billboard.updateMany({
+        const billboard=await prismadb.billboard.update({
             where:{
                 id:params.billboardId,
             },
@@ -60,7 +60,7 @@ export async function DELETE(req:Request,{params}:{params:{storeId:string,billbo
     try{
         const {userId}=auth()
         if(!userId){
-            return new NextResponse("Unauthenticated", {status:401})
+            return new NextResponse("Unauthenticated", {status:403})
         }
         
         if(!params.billboardId){
@@ -81,7 +81,7 @@ export async function DELETE(req:Request,{params}:{params:{storeId:string,billbo
                 return new NextResponse("Unauthorized", {status:403})
             }
 
-        const billboard=await prismadb.billboard.deleteMany({
+        const billboard=await prismadb.billboard.delete({
             where:{
                 id:params.billboardId,
             
