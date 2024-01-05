@@ -10,64 +10,63 @@ import { useState } from "react"
 import axios from "axios"
 import { AlertModal } from "@/components/modals/alert-modal"
 
-interface CellActionProps{
-    data:ProductColumn
+interface CellActionProps {
+  data: ProductColumn;
 }
-export const CellAction:React.FC<CellActionProps>=({data})=>{
-    const router=useRouter()
-    const params=useParams()
-    const [loading,setLoading]=useState(false)
-    const [open,setOpen]=useState(false)
-    const onCopy=(id:string)=>{
-        navigator.clipboard.writeText(id)
-        toast.success("Product ID Copied to the Clipboard")
+
+export const CellAction: React.FC<CellActionProps> = ({data}) => {
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const params = useParams();
+
+  const onConfirm = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
+      toast.success('Product deleted.');
+      router.refresh();
+    } catch (error) {
+      toast.error('Something went wrong');
+    } finally {
+      setLoading(false);
+      setOpen(false);
     }
-    const onDelete= async ()=>{
-        try{
-            setLoading(true)
-            await axios.delete(`/api/${params.storeId}/products/${data.id}`)
-            router.refresh()
-            router.push(`/${params.storeId}/products`)
-            toast.success("Product Deleted.")
-        }
-        catch(error){
-            toast.error("Make sure you removed all categories using this product first.")
-        }
-        finally{
-            setLoading(false)
-            setOpen(false)
-        }
-    }
-    
-    return (
-    <>  
-        <AlertModal isOpen={open} onClose={()=>setOpen(false)} onConfirm={onDelete} loading={loading}/> 
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="w-8 h-8 p-0">
-                    {/**sr-only means this button only is going to be visible at screan reader */}
-                    <span className="sr-only">Open Menu</span>
-                    <MoreHorizontal className="w-4 h-4"/>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>
-                    Actions
-                </DropdownMenuLabel>
-                <DropdownMenuItem onClick={()=>router.push(`/${params.storeId}/products/${data.id}`)}>
-                    <Edit className="w-4 h-4 mr-2"/>
-                    Update
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={()=>onCopy(data.id)}>
-                    <Copy className="w-4 h-4 mr-2"/>
-                    Copy ID
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={()=>setOpen(true)}>
-                    <Trash className="w-4 h-4 mr-2"/>
-                    Delete
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-</> 
-    )
-}
+  };
+
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast.success('Product ID copied to clipboard.');
+  }
+
+  return (
+    <>
+      <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onConfirm} loading={loading}/>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="w-8 h-8 p-0">
+            {/**sr-only means this button only is going to be visible at screan reader */}
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => onCopy(data.id)}>
+            <Copy className="w-4 h-4 mr-2" /> Copy Id
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => router.push(`/${params.storeId}/products/${data.id}`)}
+          >
+            <Edit className="w-4 h-4 mr-2" /> Update
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setOpen(true)}
+          >
+            <Trash className="w-4 h-4 mr-2" /> Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+};
