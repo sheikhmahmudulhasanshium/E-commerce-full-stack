@@ -17,12 +17,13 @@ export async function GET(
         id: params.categoryId
       },
       include: {
-        billboard: true
-      }
+        billboard: true,
+      },
     });
   
     return NextResponse.json(category);
-  } catch (error) {
+  } 
+  catch (error) {
     console.log('[CATEGORY_GET]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
@@ -113,7 +114,8 @@ export async function PATCH(
       data: {
         name,
         billboardId
-      }
+      },
+      
     });
   
     return NextResponse.json(category);
