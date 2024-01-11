@@ -11,4 +11,4 @@
 
 
 
-[E-commerce-full-stack-admin](https://github.com sheikhmahmudulhasanshium/E-commerce-full-stack-admin) is a back-end project based on Next.js by using the API from the  project. The project uses tailwind CSS, shadcn-ui, for developing and creating styled components. It uses MySQL as a database. It uses Cloudinary for picture upload. It uses Clerk for authentication. And it uses Stripe for its payment system. The front-end project can be found in [E-commerce-full-stack-store](https://github.com sheikhmahmudulhasanshium/E-commerce-full-stack-store)
+[E-commerce-full-stack-admin](https://github.com/sheikhmahmudulhasanshium/E-commerce-full-stack-admin) is a back-end project based on Next.js by using the API from the  project. The project uses tailwind CSS, shadcn-ui, for developing and creating styled components. It uses MySQL as a database. It uses Cloudinary for picture upload. It uses Clerk for authentication. And it uses Stripe for its payment system. The front-end project can be found in [E-commerce-full-stack-store](https://github.com/sheikhmahmudulhasanshium/E-commerce-full-stack-store)
